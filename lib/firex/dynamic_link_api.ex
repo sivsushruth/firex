@@ -1,7 +1,7 @@
 defmodule Firex.DynamicLinkApi do
   use HTTPoison.Base
 
-  @expected_fields ~w(shortLink previewLink)
+  @expected_fields ~w(shortLink previewLink error)
 
   def start_link() do
     __MODULE__.start()
@@ -13,13 +13,11 @@ defmodule Firex.DynamicLinkApi do
   end
 
   def process_response_body(body) do
-    body
+    data = body
     |> Poison.decode!
     |> Map.take(@expected_fields)
     |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
-    |> case do
-      [_ | _] = data -> struct(Firex.Response, data)
-      _ -> %{error: true}
-    end
+
+    struct(Firex.DynamicLinkResponse, data)
   end
 end
