@@ -17,7 +17,7 @@ defmodule Firex.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.4"},
+      {:httpoison, "~> 1.3"},
       {:poison, "~> 3.1"}
     ]
   end
