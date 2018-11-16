@@ -13,7 +13,7 @@ defmodule Firex.DynamicLinkApi do
   end
 
   def process_response_body(body) do
-    data = body
+    body
     |> Poison.decode!
     |> Map.take(@expected_fields)
     |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
